@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { useConfiguratorStore } from "@/store/configuratorStore";
 import type { ProductWithOptions } from "@/types";
 
