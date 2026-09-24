@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
-export default function InquirySentPage() {
+function InquirySentContent() {
   const searchParams = useSearchParams();
   const inquiryNumber = searchParams.get("id") || "INQ-PENDING";
 
@@ -67,5 +68,17 @@ export default function InquirySentPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function InquirySentPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        Loading...
+      </div>
+    }>
+      <InquirySentContent />
+    </Suspense>
   );
 }
