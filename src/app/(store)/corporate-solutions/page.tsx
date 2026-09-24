@@ -11,7 +11,7 @@ const SOLUTIONS = [
     title: "Employee Appreciation & Milestones",
     desc: "Reward your most valuable asset—your team. Whether it's an end-of-year bonus, a 5-year work anniversary, or an onboarding welcome kit, personalized leather goods leave a lasting impression of value and gratitude.",
     bullets: ["Welcome Kits (Cardholders & Keychains)", "Work Anniversaries (Wallets & Journals)", "Performance Rewards (Briefcases & Bags)"],
-    image: "/craft-texture.png",
+    image: "/employee_gifts.png",
     reverse: false,
   },
   {
@@ -19,7 +19,7 @@ const SOLUTIONS = [
     title: "Executive & VIP Gifting",
     desc: "When gifting C-suite executives, board members, or high-net-worth clients, the quality of the gift reflects the prestige of your organization. Our premium full-grain leather items are handcrafted to meet the highest standards of luxury.",
     bullets: ["Premium Full-Grain Leather", "Subtle, elegant blind embossing", "Luxury packaging options available"],
-    image: "/products/gift-set.png", // Using placeholder
+    image: "/executive_gifts.png",
     reverse: true,
   },
   {
@@ -27,7 +27,7 @@ const SOLUTIONS = [
     title: "Client Appreciation & Retention",
     desc: "Strengthen your business relationships and stay top-of-mind with your clients. A customized leather wallet or document bag used daily ensures your brand remains visible long after the initial meeting.",
     bullets: ["Functional, everyday-use items", "Durable materials for longevity", "Customized to align with your brand colors"],
-    image: "/products/wallet.png", // Using placeholder
+    image: "/client_appreciation.png",
     reverse: false,
   },
   {
@@ -35,7 +35,7 @@ const SOLUTIONS = [
     title: "Corporate Events & Conferences",
     desc: "Stand out at your next industry seminar, trade show, or corporate retreat. Move away from cheap plastic promotional items and offer premium leather goods that attendees will actually want to keep and use.",
     bullets: ["High-volume scalability (50 to 5000+ pieces)", "Fast turnaround times for event deadlines", "Memorable branding opportunities"],
-    image: "/products/cardholder.png", // Using placeholder
+    image: "/corporate_events.png",
     reverse: true,
   },
 ];
