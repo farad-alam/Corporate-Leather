@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
-import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -15,9 +15,9 @@ export default function Footer() {
               Bangladesh's premier B2B manufacturer of customized, full-grain leather goods for corporate gifting and branding. 
             </p>
             <div className={styles.socials}>
-              <a href="#" className={styles.socialIcon} aria-label="Facebook"><Facebook size={20} /></a>
-              <a href="#" className={styles.socialIcon} aria-label="Instagram"><Instagram size={20} /></a>
-              <a href="#" className={styles.socialIcon} aria-label="LinkedIn"><Linkedin size={20} /></a>
+              <a href="#" className={styles.socialIcon} aria-label="Facebook">FB</a>
+              <a href="#" className={styles.socialIcon} aria-label="Instagram">IG</a>
+              <a href="#" className={styles.socialIcon} aria-label="LinkedIn">IN</a>
             </div>
           </div>
 
