@@ -1,61 +1,67 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./CraftStory.module.css";
 
 const STATS = [
-  { value: "100%", label: "Full-Grain Leather" },
-  { value: "Hand", label: "Stitched" },
-  { value: "2–3", label: "Day Dispatch" },
+  { label: "Years Experience", value: 15, suffix: "+" },
+  { label: "Corporate Clients", value: 200, suffix: "+" },
+  { label: "Products Delivered", value: 50, suffix: "k+" },
 ];
 
 export default function CraftStory() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className={`section ${styles.section}`} aria-labelledby="craft-heading">
-      <div className={`container ${styles.inner}`}>
-        {/* Image side */}
+    <section className={styles.section} ref={sectionRef}>
+      <div className={styles.grid}>
         <div className={styles.imageCol}>
-          <div className={styles.imageWrap}>
-            <Image
-              src="/craft-texture.png"
-              alt="Close-up of premium full-grain leather texture and stitching"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className={styles.img}
-            />
-          </div>
-          {/* Floating stat card */}
-          <div className={styles.statCard}>
-            <span className={styles.statCardValue}>10+</span>
-            <span className={styles.statCardLabel}>Years of craft</span>
-          </div>
+          <Image
+            src="/about/craft-close.jpg" // Note: Needs real image or placeholder
+            alt="Leather Craftsmanship"
+            fill
+            className={styles.image}
+          />
         </div>
-
-        {/* Text side */}
         <div className={styles.textCol}>
-          <span className="label-caps">Our Craft</span>
-          <hr className="divider-gold" style={{ margin: "1rem 0" }} />
-          <h2 id="craft-heading" className={styles.title}>
-            Leather That Tells <em>Your Story</em>
-          </h2>
-          <p className={styles.body}>
-            Full-grain leather is the finest, most durable cut from the hide. Unlike
-            corrected or bonded leather, it retains the natural surface — complete
-            with its unique markings and grain. As you use it, it develops a rich patina
-            that makes each piece uniquely yours.
-          </p>
-          <p className={styles.body}>
-            Every Papa Roma product is hand-stitched with saddle thread for strength
-            that outlasts machine stitching. We believe the things you carry every day
-            should earn character, not show wear.
-          </p>
+          <div className={styles.content}>
+            <span className="section-eyebrow">Our Heritage</span>
+            <h2 className={styles.title}>Mastering the Art of Corporate Leather</h2>
+            <p className={styles.desc}>
+              We believe that a corporate gift is a reflection of the company giving it. That is why we use only the finest full-grain leather, meticulously stitched and finished by master artisans in Bangladesh.
+            </p>
+            <p className={styles.desc}>
+              Whether it's precision laser engraving or traditional hot stamping, our branding process ensures your company logo stands out with elegance and durability.
+            </p>
 
-          {/* Stats strip */}
-          <div className={styles.stats}>
-            {STATS.map((s) => (
-              <div key={s.label} className={styles.stat}>
-                <span className={styles.statValue}>{s.value}</span>
-                <span className={styles.statLabel}>{s.label}</span>
-              </div>
-            ))}
+            <div className={styles.stats}>
+              {STATS.map((stat, i) => (
+                <div key={i} className={styles.statItem}>
+                  <div className={styles.statNumber}>
+                    {isVisible ? stat.value : 0}
+                    <span className={styles.suffix}>{stat.suffix}</span>
+                  </div>
+                  <div className={styles.statLabel}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

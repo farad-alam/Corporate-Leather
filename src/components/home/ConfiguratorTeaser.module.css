@@ -1,0 +1,187 @@
+.section {
+  padding-block: var(--space-24);
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.title {
+  margin-block: var(--space-3) var(--space-6);
+}
+
+.desc {
+  color: var(--dark-text-muted);
+  margin-bottom: var(--space-8);
+  font-size: var(--text-lg);
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text-muted);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.tab:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--white);
+}
+
+.activeTab {
+  background: var(--gold-gradient);
+  border-color: transparent;
+  color: var(--charcoal);
+  font-weight: 600;
+}
+.activeTab:hover {
+  border-color: transparent;
+  color: var(--charcoal);
+}
+
+.demoVisual {
+  position: relative;
+}
+
+.demoApp {
+  background: var(--charcoal-2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  transform: perspective(1000px) rotateY(-5deg);
+  transition: transform var(--transition-slow);
+}
+
+.demoApp:hover {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.demoHeader {
+  background: rgba(0, 0, 0, 0.2);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff5f56;
+}
+.dots span:nth-child(2) { background: #ffbd2e; }
+.dots span:nth-child(3) { background: #27c93f; }
+
+.urlBar {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  padding: 4px 12px;
+  font-size: 11px;
+  color: var(--dark-text-muted);
+  font-family: monospace;
+  text-align: center;
+}
+
+.demoBody {
+  display: flex;
+  height: 400px;
+}
+
+.mockSidebar {
+  width: 140px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mockStep {
+  font-size: 12px;
+  color: var(--dark-text-muted);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.mockStep[data-active="true"] {
+  background: rgba(201, 169, 110, 0.1);
+  color: var(--gold);
+}
+
+.mockContent {
+  flex: 1;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.mockImage {
+  flex: 1;
+  background: var(--charcoal);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+.mockLeather {
+  width: 60%;
+  height: 60%;
+  background: var(--cognac);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.mockOptions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.mockOptionCard {
+  flex: 1;
+  height: 60px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+}
+
+.mockOptionCard[data-selected="true"] {
+  border-color: var(--gold);
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .demoApp {
+    transform: none;
+  }
+}

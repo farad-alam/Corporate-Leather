@@ -1,82 +1,42 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useCartStore } from "@/store/cartStore";
-import { formatPrice } from "@/lib/utils";
 import styles from "./ProductCard.module.css";
+import type { ProductWithOptions } from "@/types";
 
-type Product = {
-  id: number;
-  name: string;
-  slug: string;
-  price: number;
-  image: string;
-  category: string;
-  inStock: boolean;
-  allowEmbossing: boolean;
+type ProductCardProps = {
+  product: ProductWithOptions;
 };
 
-export default function ProductCard({ product }: { product: Product }) {
-  const { addItem } = useCartStore();
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    addItem({
-      productId: product.id,
-      name: product.name,
-      slug: product.slug,
-      image: product.image,
-      price: product.price,
-      qty: 1,
-      embossingRequested: false,
-    });
-  };
+export default function ProductCard({ product }: ProductCardProps) {
+  const optionsCount = product.customizationGroups?.reduce((acc, group) => acc + (group.options?.length || 0), 0) || 0;
 
   return (
-    <article className={styles.card}>
-      <Link href={`/products/${product.slug}`} className={styles.imageWrap}>
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className={styles.img}
+    <Link href={`/products/${product.slug}`} className={styles.card}>
+      <div className={styles.imageWrapper}>
+        <Image 
+          src={product.images[0] || "/products/wallet.png"} 
+          alt={product.name} 
+          fill 
+          style={{ objectFit: "cover" }} 
         />
-        {/* Overlay on hover */}
         <div className={styles.overlay}>
-          <span className={styles.viewBtn}>View Details</span>
-        </div>
-        {/* Badges */}
-        <div className={styles.badges}>
-          {product.allowEmbossing && (
-            <span className={`badge badge-gold ${styles.badge}`}>✦ Embossing</span>
-          )}
-          {!product.inStock && (
-            <span className={`badge badge-grey ${styles.badge}`}>Out of Stock</span>
-          )}
-        </div>
-      </Link>
-
-      <div className={styles.info}>
-        <div className={styles.meta}>
-          <span className={styles.category}>{product.category}</span>
-        </div>
-        <h3 className={styles.name}>
-          <Link href={`/products/${product.slug}`}>{product.name}</Link>
-        </h3>
-        <div className={styles.bottom}>
-          <span className={styles.price}>{formatPrice(product.price)}</span>
-          <button
-            className={`btn btn-primary btn-sm ${styles.addBtn}`}
-            onClick={handleAddToCart}
-            disabled={!product.inStock}
-            aria-label={`Add ${product.name} to cart`}
-          >
-            Add to Cart
-          </button>
+          <span className={`btn btn-gold ${styles.customizeBtn}`}>Start Customizing</span>
         </div>
       </div>
-    </article>
+      <div className={styles.info}>
+        <div>
+          <h3 className={styles.name}>{product.name}</h3>
+          {product.category && (
+            <span className={styles.category}>{product.category.name}</span>
+          )}
+        </div>
+        
+        {optionsCount > 0 && (
+          <div className={styles.tags}>
+            <span className={`tag tag-gold`}>{optionsCount} Customization Options</span>
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }

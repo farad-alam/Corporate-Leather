@@ -1,93 +1,45 @@
-import { Metadata } from "next";
-import ProductDetail from "@/components/product/ProductDetail";
-import styles from "./product.module.css";
+"use client";
 
-// Static product data for initial build — replace with DB fetch
-const PRODUCTS: Record<string, {
-  id: number; name: string; slug: string; price: number; images: string[];
-  category: string; description: string; material: string; dimensions: string;
-  inStock: boolean; allowEmbossing: boolean;
-}> = {
-  "classic-bifold-wallet": {
-    id: 1, name: "Classic Bifold Wallet", slug: "classic-bifold-wallet", price: 2800,
-    images: ["/products/wallet.png"],
-    category: "Wallets",
-    description: "A timeless bifold wallet crafted from premium full-grain cowhide leather. Features 6 card slots, 2 bill compartments, and a slim profile that fits comfortably in any pocket. The leather is hand-stitched with waxed thread that outlasts the wallet itself. As you use it daily, it develops a rich, unique patina — no two wallets age the same way.",
-    material: "Full-Grain Cowhide Leather", dimensions: "11cm × 9cm × 1.2cm",
-    inStock: true, allowEmbossing: true,
-  },
-  "slim-card-holder": {
-    id: 3, name: "Slim Card Holder", slug: "slim-card-holder", price: 1400,
-    images: ["/products/cardholder.png"],
-    category: "Cardholders",
-    description: "A slim, minimalist card holder for those who prefer to carry only what's essential. Holds 4–6 cards with ease. The snap-fit leather construction keeps cards secure without bulk. Ideal for daily carry or as a complement to a larger wallet.",
-    material: "Full-Grain Cowhide Leather", dimensions: "9.5cm × 6.5cm × 0.6cm",
-    inStock: true, allowEmbossing: true,
-  },
-  "executive-belt-35mm": {
-    id: 4, name: "Executive Belt — 35mm", slug: "executive-belt-35mm", price: 3200,
-    images: ["/products/belt.png"],
-    category: "Belts",
-    description: "A refined 35mm dress belt cut from a single piece of full-grain leather. Fitted with a solid brass pin-buckle, polished to a warm gold finish. The belt is pre-shaped for comfort and will soften and conform to your body over time. Suitable for formal and smart-casual wear.",
-    material: "Full-Grain Cowhide Leather · Brass Buckle", dimensions: "Available: 30\"–42\"",
-    inStock: true, allowEmbossing: false,
-  },
-  "a5-leather-diary-cover": {
-    id: 5, name: "A5 Leather Diary Cover", slug: "a5-leather-diary-cover", price: 2200,
-    images: ["/products/diary.png"],
-    category: "Diary Covers",
-    description: "A beautifully crafted A5 leather journal cover with pen loop and elastic closure. Accepts any standard A5 insert or refill. The full-grain leather surface is untreated to allow natural ageing. An excellent gift for professionals, writers, or anyone who values the written word.",
-    material: "Full-Grain Cowhide Leather", dimensions: "Fits A5 (21cm × 15cm)",
-    inStock: true, allowEmbossing: true,
-  },
-  "signature-gift-set": {
-    id: 6, name: "The Signature Gift Set", slug: "signature-gift-set", price: 4500,
-    images: ["/products/gift-set.png"],
-    category: "Gift Sets",
-    description: "Our curated Signature Gift Set pairs a Classic Bifold Wallet with a Slim Card Holder, presented in a premium matte black gift box with ivory tissue and a gold ribbon. Optional custom embossing available on both pieces. Perfect for birthdays, promotions, anniversaries, or corporate gifting.",
-    material: "Full-Grain Cowhide Leather · Gift Box Included", dimensions: "Box: 22cm × 16cm × 5cm",
-    inStock: true, allowEmbossing: true,
-  },
+import { useParams } from "next/navigation";
+import ProductDetail from "@/components/product/ProductDetail";
+import type { ProductWithOptions } from "@/types";
+
+// Mock data matching the configurator mock
+const MOCK_PRODUCT: ProductWithOptions = {
+  id: 1,
+  name: "Executive Bifold Wallet",
+  slug: "executive-bifold-wallet",
+  categoryId: 1,
+  category: { id: 1, name: "Wallets", slug: "wallets" },
+  description: "A premium leather wallet designed for the modern executive. Crafted from full-grain leather, it ages beautifully, developing a rich patina over time. Perfect for corporate gifting, it offers ample space for cards, cash, and receipts while maintaining a slim profile.",
+  shortDescription: "Classic bifold.",
+  images: ["/products/wallet.png", "/products/wallet-open.png", "/products/wallet-detail.png"],
+  featured: true,
+  material: "Full-Grain Leather",
+  displayOrder: 1,
+  tags: ["wallet", "bifold"],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  customizationGroups: [
+    { id: 1, productId: 1, groupKey: "leather_type", label: "Leather Type", type: "single", required: true, displayOrder: 1, options: [] },
+    { id: 2, productId: 1, groupKey: "color", label: "Color", type: "single", required: true, displayOrder: 2, options: [] },
+    { id: 3, productId: 1, groupKey: "card_slots", label: "Card Slots", type: "single", required: true, displayOrder: 3, options: [] },
+    { id: 4, productId: 1, groupKey: "coin_pocket", label: "Coin Pocket", type: "single", required: true, displayOrder: 4, options: [] }
+  ]
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const product = PRODUCTS[slug];
-  if (!product) return { title: "Product Not Found" };
-  return {
-    title: `${product.name} — Papa Roma Leather`,
-    description: product.description.slice(0, 160),
-    openGraph: { title: product.name, images: product.images[0] },
-  };
-}
-
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const product = PRODUCTS[slug];
+export default function ProductPage() {
+  const params = useParams();
+  // In a real app, fetch based on params.slug
+  const product = MOCK_PRODUCT;
 
   if (!product) {
-    return (
-      <div className={styles.notFound}>
-        <h1>Product not found</h1>
-        <p>The product you&apos;re looking for doesn&apos;t exist or has been removed.</p>
-        <a href="/shop" className="btn btn-primary">Back to Shop</a>
-      </div>
-    );
+    return <div className="container section">Product not found.</div>;
   }
 
   return (
-    <div className={styles.page}>
-      <div className="container">
-        <ProductDetail product={product} />
-      </div>
+    <div style={{ background: "var(--bg-primary)", minHeight: "100vh", paddingTop: "var(--navbar-height)" }}>
+      <ProductDetail product={product} />
     </div>
   );
 }

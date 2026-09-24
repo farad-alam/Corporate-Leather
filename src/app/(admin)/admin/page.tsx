@@ -1,73 +1,59 @@
-import styles from "./dashboard.module.css";
-import { formatPrice } from "@/lib/utils";
+import { db } from "@/db";
+import { inquiries } from "@/db/schema";
+import { sql } from "drizzle-orm";
+import Link from "next/link";
+import { ArrowRight, FileText, CheckCircle, Clock } from "lucide-react";
 
-// Mock data for the initial layout
-const STATS = [
-  { label: "Pending Orders", value: "12" },
-  { label: "Pending Verification", value: "8" },
-  { label: "Today's Revenue", value: formatPrice(18500) },
-  { label: "Total Revenue (Month)", value: formatPrice(245000) },
-];
+export default async function AdminDashboard() {
+  // Mocking DB call for now since we don't have active connection in this env
+  const stats = {
+    total: 24,
+    new: 5,
+    quoted: 12,
+    completed: 7,
+  };
 
-const RECENT_ORDERS = [
-  { id: "PRL-X8K9M", customer: "Arif Rahman", total: 4200, status: "PENDING_VERIFICATION", date: "2 mins ago" },
-  { id: "PRL-J2P4Q", customer: "Nadia Sultana", total: 2200, status: "PENDING_DELIVERY", date: "1 hour ago" },
-  { id: "PRL-M5N1L", customer: "Tanvir Ahmed", total: 1400, status: "DELIVERED", date: "5 hours ago" },
-  { id: "PRL-K9L3P", customer: "Sumaiya Hasan", total: 5600, status: "PENDING_VERIFICATION", date: "1 day ago" },
-];
-
-export default function AdminDashboard() {
   return (
-    <div className={styles.page}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Dashboard Overview</h1>
-        <p className={styles.subtitle}>Welcome back. Here&apos;s what&apos;s happening today.</p>
-      </div>
-
-      <div className={styles.statsGrid}>
-        {STATS.map((stat) => (
-          <div key={stat.label} className={styles.statCard}>
-            <span className={styles.statLabel}>{stat.label}</span>
-            <span className={styles.statValue}>{stat.value}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Recent Orders</h2>
-          <a href="/admin/orders" className={styles.viewAll}>View all →</a>
-        </div>
+    <div style={{ padding: "var(--space-8)" }}>
+      <h1 style={{ marginBottom: "var(--space-8)" }}>Dashboard Overview</h1>
+      
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "var(--space-6)", marginBottom: "var(--space-12)" }}>
         
-        <div className={styles.tableWrap}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Order #</th>
-                <th>Customer</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {RECENT_ORDERS.map((order) => (
-                <tr key={order.id}>
-                  <td className={styles.cellId}>{order.id}</td>
-                  <td>{order.customer}</td>
-                  <td className={styles.cellPrice}>{formatPrice(order.total)}</td>
-                  <td>
-                    <span className={`${styles.badge} ${styles[order.status]}`}>
-                      {order.status.replace("_", " ")}
-                    </span>
-                  </td>
-                  <td className={styles.cellTime}>{order.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="card" style={{ padding: "var(--space-6)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", marginBottom: "var(--space-2)" }}>
+            <FileText color="var(--gold)" />
+            <h3 style={{ margin: 0 }}>New Inquiries</h3>
+          </div>
+          <div style={{ fontSize: "var(--text-4xl)", fontWeight: 700 }}>{stats.new}</div>
         </div>
+
+        <div className="card" style={{ padding: "var(--space-6)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", marginBottom: "var(--space-2)" }}>
+            <Clock color="var(--cognac)" />
+            <h3 style={{ margin: 0 }}>Quoted (Pending)</h3>
+          </div>
+          <div style={{ fontSize: "var(--text-4xl)", fontWeight: 700 }}>{stats.quoted}</div>
+        </div>
+
+        <div className="card" style={{ padding: "var(--space-6)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", marginBottom: "var(--space-2)" }}>
+            <CheckCircle color="var(--success)" />
+            <h3 style={{ margin: 0 }}>Completed</h3>
+          </div>
+          <div style={{ fontSize: "var(--text-4xl)", fontWeight: 700 }}>{stats.completed}</div>
+        </div>
+
       </div>
+
+      <div style={{ display: "flex", gap: "var(--space-6)" }}>
+        <Link href="/admin/inquiries" className="btn btn-primary btn-lg">
+          Manage Inquiries <ArrowRight size={18} />
+        </Link>
+        <Link href="/admin/products" className="btn btn-outline btn-lg">
+          Manage Products & Configurator <ArrowRight size={18} />
+        </Link>
+      </div>
+
     </div>
   );
 }

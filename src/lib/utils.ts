@@ -1,68 +1,59 @@
-/**
- * Format a price integer (BDT) to Bengali Taka display string
- * e.g. 2500 → "৳2,500"
- */
-export function formatPrice(amount: number): string {
-  return `৳${amount.toLocaleString("en-BD")}`;
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 
-/**
- * Generate an order number in the format PR-YYYYMMDD-XXXX
- */
-export function generateOrderNumber(): string {
-  const date = new Date();
-  const dateStr = date.toISOString().slice(0, 10).replace(/-/g, "");
-  const rand = Math.floor(1000 + Math.random() * 9000);
-  return `PR-${dateStr}-${rand}`;
-}
-
-/**
- * Slugify a string
- */
-export function slugify(str: string): string {
+export function slugify(str: string) {
   return str
     .toLowerCase()
     .trim()
-    .replace(/[\s\W-]+/g, "-")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
 
-/**
- * Build a pre-filled WhatsApp URL
- */
-export function buildWhatsAppUrl(message: string): string {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
-  const encoded = encodeURIComponent(message);
-  return `https://wa.me/${number}?text=${encoded}`;
+export function generateInquiryNumber() {
+  const date = new Date();
+  const dateStr = date.toISOString().split("T")[0].replace(/-/g, ""); // YYYYMMDD
+  const random = Math.floor(1000 + Math.random() * 9000); // 4 digit random
+  return `INQ-${dateStr}-${random}`;
 }
 
-/**
- * Get the shipping fee for a district
- * Dhaka district → ৳80, everything else → ৳150
- */
-export function getShippingFee(district: string): number {
-  const dhakaDistricts = ["Dhaka"];
-  const isDhaka = dhakaDistricts.some((d) =>
-    district.toLowerCase().includes(d.toLowerCase())
-  );
-  return isDhaka
-    ? Number(process.env.NEXT_PUBLIC_SHIPPING_DHAKA ?? 80)
-    : Number(process.env.NEXT_PUBLIC_SHIPPING_OUTSIDE ?? 150);
+export function buildWhatsAppUrl(phone: string, text: string) {
+  // Ensure phone has country code if missing (assuming Bangladesh default for this project)
+  const formattedPhone = phone.startsWith("+") ? phone.replace("+", "") : `88${phone}`;
+  return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(text)}`;
 }
 
-/**
- * Bangladesh districts list
- */
-export const BD_DISTRICTS = [
-  "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura",
-  "Brahmanbaria", "Chandpur", "Chapai Nawabganj", "Chattogram", "Chuadanga",
-  "Cox's Bazar", "Cumilla", "Dhaka", "Dinajpur", "Faridpur", "Feni",
-  "Gaibandha", "Gazipur", "Gopalganj", "Habiganj", "Jamalpur", "Jashore",
-  "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachhari", "Khulna", "Kishoreganj",
-  "Kurigram", "Kushtia", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura",
-  "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Mymensingh", "Naogaon",
-  "Narail", "Narayanganj", "Narsingdi", "Natore", "Netrokona", "Nilphamari",
-  "Noakhali", "Pabna", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari",
-  "Rajshahi", "Rangamati", "Rangpur", "Satkhira", "Shariatpur", "Sherpur",
-  "Sirajganj", "Sunamganj", "Sylhet", "Tangail", "Thakurgaon",
-].sort();
+export const INDUSTRIES = [
+  "Banking & Finance",
+  "Pharmaceuticals",
+  "Telecommunications",
+  "FMCG",
+  "IT & Software",
+  "Real Estate",
+  "Manufacturing",
+  "Legal Services",
+  "Education",
+  "Healthcare",
+  "Other",
+];
+
+export function formatCustomizationSummary(
+  productName: string,
+  quantity: number,
+  selections: Record<string, string | string[] | number>,
+  brandingType: string
+) {
+  let summary = `Product: ${productName}\nQuantity: ${quantity}\nBranding: ${brandingType}\n\nConfigurations:\n`;
+  
+  for (const [key, value] of Object.entries(selections)) {
+    const label = key.replace(/_/g, " ");
+    const valStr = Array.isArray(value) ? value.join(", ") : value;
+    summary += `- ${label}: ${valStr}\n`;
+  }
+  
+  return summary;
+}

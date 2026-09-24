@@ -1,0 +1,84 @@
+.dropZone {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  background: var(--platinum);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.dropZone:hover, .dragging {
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.05);
+}
+
+.icon {
+  color: var(--gold);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--charcoal);
+  margin-bottom: var(--space-1);
+}
+
+.subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.successState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: rgba(39, 174, 96, 0.08);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  border-radius: var(--radius-lg);
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.successIcon {
+  color: var(--success);
+}
+
+.fileName {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--charcoal);
+}
+
+.fileSize {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--error);
+}
