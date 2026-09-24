@@ -31,8 +31,11 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  const isHomePage = pathname === "/";
+  const shouldBeSolid = !isHomePage || isScrolled;
+
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+    <header className={`${styles.header} ${shouldBeSolid ? styles.scrolled : ""}`}>
       <div className={`container ${styles.container}`}>
         
         {/* Logo */}
