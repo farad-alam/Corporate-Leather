@@ -11,7 +11,7 @@ const SOLUTIONS = [
     title: "Employee Appreciation & Milestones",
     desc: "Reward your most valuable asset—your team. Whether it's an end-of-year bonus, a 5-year work anniversary, or an onboarding welcome kit, personalized leather goods leave a lasting impression of value and gratitude.",
     bullets: ["Welcome Kits (Cardholders & Keychains)", "Work Anniversaries (Wallets & Journals)", "Performance Rewards (Briefcases & Bags)"],
-    image: "/about/craft-close.jpg", // Using placeholder image from existing assets
+    image: "/craft-texture.png",
     reverse: false,
   },
   {

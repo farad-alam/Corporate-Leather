@@ -34,7 +34,7 @@ export default function CraftStory() {
       <div className={styles.grid}>
         <div className={styles.imageCol}>
           <Image
-            src="/about/craft-close.jpg" // Note: Needs real image or placeholder
+            src="/craft-texture.png"
             alt="Leather Craftsmanship"
             fill
             className={styles.image}
