@@ -1,0 +1,141 @@
+.page {
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+  background: var(--bg-primary);
+}
+
+/* Hero */
+.hero {
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding-block: var(--space-24) var(--space-32);
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+.heroTitle {
+  color: var(--ivory);
+  margin-block: var(--space-4) var(--space-6);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.heroDesc {
+  font-size: var(--text-xl);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Solutions */
+.solutionsSection {
+  padding-block: var(--space-24);
+  background: var(--white);
+}
+
+.solutionRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+  margin-bottom: var(--space-32);
+}
+
+.solutionRow:last-child {
+  margin-bottom: 0;
+}
+
+.solutionRow.reverse {
+  direction: rtl;
+}
+
+.solutionRow.reverse > * {
+  direction: ltr;
+}
+
+.imageCol {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--platinum);
+  border-radius: var(--radius-xl);
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  margin-bottom: var(--space-6);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+}
+
+.desc {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-8) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.bulletList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 500;
+  color: var(--charcoal);
+  font-size: var(--text-base);
+  background: var(--bg-secondary);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
+}
+
+.bulletIcon {
+  flex-shrink: 0;
+}
+
+/* CTA */
+.cta {
+  background: var(--platinum);
+  padding-block: var(--space-24);
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+.ctaContent h2 {
+  margin-bottom: var(--space-4);
+}
+
+.ctaContent p {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+}
+
+@media (max-width: 992px) {
+  .solutionRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    margin-bottom: var(--space-24);
+  }
+  
+  .solutionRow.reverse {
+    direction: ltr;
+  }
+}
